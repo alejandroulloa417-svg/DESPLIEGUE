@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculadora | Code Rider</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #d9edff, #f4f9ff, #c6e3ff);
+        }
+
+        .calculadora {
+            width: 100%;
+            max-width: 410px;
+            padding: 35px 30px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(35, 105, 170, 0.16);
+            text-align: center;
+        }
+
+        .icono {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #1687e8, #65b5ff);
+            color: white;
+            font-size: 38px;
+            font-weight: bold;
+            box-shadow: 0 8px 18px rgba(22, 135, 232, 0.25);
+        }
+
+        h1 {
+            color: #173b63;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #72859a;
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .campo {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 8px;
+            color: #294967;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0edf8;
+            border-radius: 12px;
+            outline: none;
+            background: #f8fbff;
+            color: #173b63;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .campo input:focus {
+            border-color: #1687e8;
+            box-shadow: 0 0 0 4px rgba(22, 135, 232, 0.10);
+            background: #ffffff;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .boton {
+            flex: 1;
+            padding: 14px 10px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .boton:hover {
+            transform: translateY(-2px);
+        }
+
+        .sumar {
+            background: linear-gradient(135deg, #0879d9, #39a2ff);
+            box-shadow: 0 5px 12px rgba(8, 121, 217, 0.20);
+        }
+
+        .sumar:hover {
+            box-shadow: 0 8px 18px rgba(8, 121, 217, 0.30);
+        }
+
+        .restar {
+            background: linear-gradient(135deg, #5c6bc0, #8796ed);
+            box-shadow: 0 5px 12px rgba(92, 107, 192, 0.20);
+        }
+
+        .restar:hover {
+            box-shadow: 0 8px 18px rgba(92, 107, 192, 0.30);
+        }
+
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #cce6ff;
+            border-radius: 15px;
+            background: #eef7ff;
+            overflow-wrap: anywhere;
+        }
+
+        .resultado h2 {
+            color: #50718f;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .valor {
+            color: #0879d9;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .error {
+            color: #c0392b;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .pie {
+            margin-top: 25px;
+            color: #91a4b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 380px) {
+            .calculadora {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="calculadora">
+
+        <div class="icono">±</div>
+
+        <h1>Calculadora</h1>
+
+        <p class="descripcion">
+            Realiza tus operaciones de forma fácil y rápida.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="campo">
+                <label for="numero1">Primer número</label>
+                <input
+                    type="number"
+                    id="numero1"
+                    name="numero1"
+                    step="any"
+                    placeholder="Ejemplo: 15"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="numero2">Segundo número</label>
+                <input
+                    type="number"
+                    id="numero2"
+                    name="numero2"
+                    step="any"
+                    placeholder="Ejemplo: 27"
+                    required
+                >
+            </div>
+
+            <div class="botones">
+                <button
+                    type="submit"
+                    name="operacion"
+                    value="sumar"
+                    class="boton sumar"
+                >
+                    + Sumar
+                </button>
+
+                <button
+                    type="submit"
+                    name="operacion"
+                    value="restar"
+                    class="boton restar"
+                >
+                    − Restar
+                </button>
+            </div>
+        </form>
+
+        {% if resultado != None %}
+            <section class="resultado" aria-live="polite">
+                {% if resultado|stringformat:"s" == "Ingresa dos números válidos" %}
+                    <p class="error">{{ resultado }}</p>
+                {% else %}
+                    <h2>Resultado de tu operación</h2>
+                    <p class="valor">{{ resultado|floatformat:"-10" }}</p>
+                {% endif %}
+            </section>
+        {% endif %}
+
+        <p class="pie">
+            Proyecto educativo · Code Rider
+        </p>
+
+    </main>
+
+</body>
+</html>
